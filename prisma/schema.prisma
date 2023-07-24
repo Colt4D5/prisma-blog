@@ -10,6 +10,20 @@ datasource db {
   url      = "file:./db.sqlite"
 }
 
+model User {
+  id Int @id @default(autoincrement())
+  username String?
+  email String
+  password String
+  first_name String?
+  last_name String?
+  avatar String?
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt @default(now())
+  deleted_at DateTime?
+  is_deleted Boolean @default(false)
+}
+
 model Post {
   id Int @id @default(autoincrement())
   title String
