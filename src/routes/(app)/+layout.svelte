@@ -20,6 +20,5 @@
 <style lang="postcss">
 	main {
 		min-height: calc(100dvh - 180px);
-		padding-block: 3rem 6rem;
 	}
 </style>

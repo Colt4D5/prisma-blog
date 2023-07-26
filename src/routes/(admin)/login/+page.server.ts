@@ -1,8 +1,8 @@
-import { fail, type Actions } from '@sveltejs/kit';
+import { fail, type Actions, redirect } from '@sveltejs/kit';
 import { prisma } from '$lib/server/prisma';
 
 export const actions = {
-  loginUser: async ({ request }) => {
+  loginUser: async ({ request, cookies, locals }) => {
     const { email, password } = Object.fromEntries(await request.formData()) as {
 			email: string;
 			password: string;
@@ -14,9 +14,25 @@ export const actions = {
       });
     }
     
-    console.log(email, password);
+    const user = await prisma.user.findFirst({
+      where: {
+        email: email,
+        password: password
+      }
+    });
 
-    return { success: true }
+    if (!user) {
+      return fail(400, {
+        invalid: true
+      });
+    }
+
+    locals.user = user;
+
+    cookies.set('user', email);
+
+    throw redirect(302, '/admin/new-post');
+
   },
   registerUser: async ({ request }) => {
     const { email, emailconfirm, password } = Object.fromEntries(await request.formData()) as {

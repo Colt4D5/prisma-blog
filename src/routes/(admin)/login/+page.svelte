@@ -20,7 +20,7 @@
 
 
 <form method="post" use:enhance>
-  <h1>{isLogin ? "Log In" : "Sign"}</h1>
+  <h1>{isLogin ? "Log In" : "Sign Up"}</h1>
 
   {#if form?.missing}
     <p class="textError">Email and password fields are required</p>
@@ -29,7 +29,7 @@
     <p class="textError">Your emails do not match</p>
   {/if}
   {#if form?.success}
-    <p class="textSuccess">You have successfully registered</p>
+    <p class="textSuccess">Success!</p>
   {/if}
 
   <input on:input={removeError} type="text" class:inputError={form?.missing} name="email" id="email" placeholder="Email">
